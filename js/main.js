@@ -1,21 +1,21 @@
 (function() {
   'use strict';
-  const version = 'Version: 2022.05.27';
+  const version = 'Version: 2022.05.27-b';
 
   window.addEventListener('load', init, false);
 
   let elemText;
   const elemResults = [];
   const codes = [
-    56320,
-    56424,
-    56528,
-    56684,
-    56736,
-    56788,
-    56840,
-    56892,
-    56944,
+    [56320, 57294],
+    [56424, 57294],
+    [56528, 57294],
+    [56684, 57294],
+    [56736, 57314],
+    [56788, 57324],
+    [56840, 57314],
+    [56892, 57324],
+    [56944, 57334],
   ];
   let typeNum = codes.length;
 
@@ -39,13 +39,17 @@
 
     for (const c of text) {
       const code = c.charCodeAt(0);
-      if (0x41 <= code && code <= 0x5a) {
+      if (0x30 <= code && code <= 0x39) {
         for (let i = 0; i < typeNum; ++i) {
-          resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i] + code - 0x41);
+          resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i][1] + code - 0x30);
+        }
+      } else if (0x41 <= code && code <= 0x5a) {
+        for (let i = 0; i < typeNum; ++i) {
+          resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i][0] + code - 0x41);
         }
       } else if (0x61 <= code && code <= 0x7a) {
         for (let i = 0; i < typeNum; ++i) {
-          resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i] + 26 + code - 0x61);
+          resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i][0] + 26 + code - 0x61);
         }
       } else {
         for (let i = 0; i < typeNum; ++i) {
