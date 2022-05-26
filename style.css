@@ -1,0 +1,48 @@
+html {
+  touch-action: manipulation;
+}
+
+body {
+  margin: 0px;
+}
+
+#contents {
+  max-width: 500px;
+  margin: auto;
+  padding: 0px;
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+h1 {
+  margin: 0px;
+  background-color: pink;
+  font-size: 18px;
+}
+
+h2 {
+  margin: 0px;
+  background-color: skyblue;
+  font-size: 18px;
+}
+
+svg {
+  user-select: none;
+}
+
+div.inner {
+  margin: 5px;
+}
+
+div.pink {
+  margin-bottom: 5px;
+  border: solid 3px pink;
+}
+
+div.skyblue {
+  margin-bottom: 5px;
+  border: solid 3px skyblue;
+}
