@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  const version = 'Version: 2022.05.26-c';
+  const version = 'Version: 2022.05.27';
 
   window.addEventListener('load', init, false);
 
@@ -15,6 +15,7 @@
     56788,
     56840,
     56892,
+    56944,
   ];
   let typeNum = codes.length;
 
