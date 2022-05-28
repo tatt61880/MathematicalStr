@@ -1,28 +1,30 @@
 (function() {
   'use strict';
-  const version = 'Version: 2022.05.28';
+  const version = 'Version: 2022.05.29';
 
   window.addEventListener('load', init, false);
 
   let elemText;
   const elemResults = [];
   const codes = [
-    [56320, 57294],
-    [56424, 57294],
-    [56528, 57294],
-    [56684, 57294],
-    [56736, 57314],
-    [56788, 57324],
-    [56840, 57314],
-    [56892, 57324],
-    [56944, 57334],
-    [0, 57304],
+    // [1バイト目, 英, 数]
+    [55349, 56320, 57294],
+    [55349, 56424, 57294],
+    [55349, 56528, 57294],
+    [55349, 56684, 57294],
+    [55349, 56736, 57314],
+    [55349, 56788, 57324],
+    [55349, 56840, 57314],
+    [55349, 56892, 57324],
+    [55349, 56944, 57334],
+    [55349, 0, 57304],
+    [0, 9398, 9450, 9311],
   ];
   let typeNum = codes.length;
 
   function init() {
     document.getElementById('versionInfo').innerText = version;
-    
+
     elemText = document.getElementById('inputText');
     elemText.addEventListener('input', updateResult, false);
     for (let i = 0; i < typeNum; ++i) {
@@ -42,20 +44,32 @@
       const code = c.charCodeAt(0);
       if (0x30 <= code && code <= 0x39) {
         for (let i = 0; i < typeNum; ++i) {
-          resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i][1] + code - 0x30);
+          if (codes[i][0] == 0) {
+            if (code == 0x30) {
+              resultTexts[i] += String.fromCharCode(codes[i][2] + code - 0x30);
+            } else {
+              resultTexts[i] += String.fromCharCode(codes[i][3] + code - 0x30);
+            }
+          } else {
+            resultTexts[i] += String.fromCharCode(codes[i][0]) + String.fromCharCode(codes[i][2] + code - 0x30);
+          }
         }
       } else if (0x41 <= code && code <= 0x5a) {
         for (let i = 0; i < typeNum; ++i) {
-          if (codes[i][0] != 0) {
-            resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i][0] + code - 0x41);
+          if (codes[i][0] == 0) {
+            resultTexts[i] += String.fromCharCode(codes[i][1] + code - 0x41);
+          } else if (codes[i][1] != 0) {
+            resultTexts[i] += String.fromCharCode(codes[i][0]) + String.fromCharCode(codes[i][1] + code - 0x41);
           } else {
             resultTexts[i] += c;
           }
         }
       } else if (0x61 <= code && code <= 0x7a) {
         for (let i = 0; i < typeNum; ++i) {
-          if (codes[i][0] != 0) {
-            resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i][0] + 26 + code - 0x61);
+          if (codes[i][0] == 0) {
+            resultTexts[i] += String.fromCharCode(codes[i][1] + 26 + code - 0x61);
+          } else if (codes[i][1] != 0) {
+            resultTexts[i] += String.fromCharCode(codes[i][0]) + String.fromCharCode(codes[i][1] + 26 + code - 0x61);
           } else {
             resultTexts[i] += c;
           }
