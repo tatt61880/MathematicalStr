@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  const version = 'Version: 2022.05.27-b';
+  const version = 'Version: 2022.05.28';
 
   window.addEventListener('load', init, false);
 
@@ -16,6 +16,7 @@
     [56840, 57314],
     [56892, 57324],
     [56944, 57334],
+    [0, 57304],
   ];
   let typeNum = codes.length;
 
@@ -45,11 +46,19 @@
         }
       } else if (0x41 <= code && code <= 0x5a) {
         for (let i = 0; i < typeNum; ++i) {
-          resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i][0] + code - 0x41);
+          if (codes[i][0] != 0) {
+            resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i][0] + code - 0x41);
+          } else {
+            resultTexts[i] += c;
+          }
         }
       } else if (0x61 <= code && code <= 0x7a) {
         for (let i = 0; i < typeNum; ++i) {
-          resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i][0] + 26 + code - 0x61);
+          if (codes[i][0] != 0) {
+            resultTexts[i] += String.fromCharCode(55349) + String.fromCharCode(codes[i][0] + 26 + code - 0x61);
+          } else {
+            resultTexts[i] += c;
+          }
         }
       } else {
         for (let i = 0; i < typeNum; ++i) {
