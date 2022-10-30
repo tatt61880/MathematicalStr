@@ -3,14 +3,22 @@ html {
 }
 
 body {
-  margin: 0px;
+  margin: 0;
+  background-color: #ccffff;
 }
 
 #contents {
   max-width: 500px;
-  margin: auto;
-  padding: 0px;
+  margin: 0 auto;
+  padding: 0;
   text-align: center;
+  background-color: white;
+}
+
+#version-info {
+  color: #bbbbbb;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .left {
@@ -18,13 +26,13 @@ body {
 }
 
 h1 {
-  margin: 0px;
+  margin: 0;
   background-color: pink;
   font-size: 18px;
 }
 
 h2 {
-  margin: 0px;
+  margin: 0;
   background-color: skyblue;
   font-size: 18px;
 }

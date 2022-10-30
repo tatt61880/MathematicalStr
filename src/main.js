@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  const version = 'Version: 2022.05.29';
+  const version = 'Version: 2022.10.30';
 
   window.addEventListener('load', init, false);
 
@@ -20,12 +20,12 @@
     [55349, 0, 57304],
     [0, 9398, 9450, 9311],
   ];
-  let typeNum = codes.length;
+  const typeNum = codes.length;
 
   function init() {
-    document.getElementById('versionInfo').innerText = version;
+    document.getElementById('version-info').innerText = version;
 
-    elemText = document.getElementById('inputText');
+    elemText = document.getElementById('input-text');
     elemText.addEventListener('input', updateResult, false);
     for (let i = 0; i < typeNum; ++i) {
       elemResults[i] = document.getElementById(`result${i}`);
@@ -35,7 +35,7 @@
 
   function updateResult() {
     const text = elemText.value;
-    let resultTexts = [];
+    const resultTexts = [];
     for (let i = 0; i < typeNum; ++i) {
       resultTexts[i] = '';
     }
