@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  const version = 'Version: 2022.10.30';
+  const version = 'Version: 2022.12.04';
 
   window.addEventListener('load', init, false);
 
@@ -44,8 +44,8 @@
       const code = c.charCodeAt(0);
       if (0x30 <= code && code <= 0x39) {
         for (let i = 0; i < typeNum; ++i) {
-          if (codes[i][0] == 0) {
-            if (code == 0x30) {
+          if (codes[i][0] === 0) {
+            if (code === 0x30) {
               resultTexts[i] += String.fromCharCode(codes[i][2] + code - 0x30);
             } else {
               resultTexts[i] += String.fromCharCode(codes[i][3] + code - 0x30);
@@ -56,9 +56,9 @@
         }
       } else if (0x41 <= code && code <= 0x5a) {
         for (let i = 0; i < typeNum; ++i) {
-          if (codes[i][0] == 0) {
+          if (codes[i][0] === 0) {
             resultTexts[i] += String.fromCharCode(codes[i][1] + code - 0x41);
-          } else if (codes[i][1] != 0) {
+          } else if (codes[i][1] !== 0) {
             resultTexts[i] += String.fromCharCode(codes[i][0]) + String.fromCharCode(codes[i][1] + code - 0x41);
           } else {
             resultTexts[i] += c;
@@ -66,9 +66,9 @@
         }
       } else if (0x61 <= code && code <= 0x7a) {
         for (let i = 0; i < typeNum; ++i) {
-          if (codes[i][0] == 0) {
+          if (codes[i][0] === 0) {
             resultTexts[i] += String.fromCharCode(codes[i][1] + 26 + code - 0x61);
-          } else if (codes[i][1] != 0) {
+          } else if (codes[i][1] !== 0) {
             resultTexts[i] += String.fromCharCode(codes[i][0]) + String.fromCharCode(codes[i][1] + 26 + code - 0x61);
           } else {
             resultTexts[i] += c;
@@ -82,7 +82,7 @@
     }
 
     for (let i = 0; i < typeNum; ++i) {
-      elemResults[i].innerText = resultTexts[i] == '' ? '　' : resultTexts[i];
+      elemResults[i].innerText = resultTexts[i] === '' ? '　' : resultTexts[i];
     }
   }
 })();
