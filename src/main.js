@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  const version = 'Version: 2022.12.04';
+  const version = 'Version: 2023.01.01';
 
   window.addEventListener('load', init, false);
 
@@ -20,6 +20,18 @@
     [55349, 0, 57304],
     [0, 9398, 9450, 9311],
   ];
+  const mapChars = {
+    0: ['⁰', '₀'],
+    1: ['¹', '₁'],
+    2: ['²', '₂'],
+    3: ['³', '₃'],
+    4: ['⁴', '₄'],
+    5: ['⁵', '₅'],
+    6: ['⁶', '₆'],
+    7: ['⁷', '₇'],
+    8: ['⁸', '₈'],
+    9: ['⁹', '₉'],
+  };
   const typeNum = codes.length;
 
   function init() {
@@ -27,7 +39,7 @@
 
     elemText = document.getElementById('input-text');
     elemText.addEventListener('input', updateResult, false);
-    for (let i = 0; i < typeNum; ++i) {
+    for (let i = 0; i < typeNum + 2; ++i) {
       elemResults[i] = document.getElementById(`result${i}`);
     }
     updateResult();
@@ -39,10 +51,12 @@
     for (let i = 0; i < typeNum; ++i) {
       resultTexts[i] = '';
     }
+    resultTexts[typeNum] = '';
+    resultTexts[typeNum + 1] = '';
 
     for (const c of text) {
       const code = c.charCodeAt(0);
-      if (0x30 <= code && code <= 0x39) {
+      if (0x30 <= code && code <= 0x39) { // 0-9
         for (let i = 0; i < typeNum; ++i) {
           if (codes[i][0] === 0) {
             if (code === 0x30) {
@@ -54,7 +68,9 @@
             resultTexts[i] += String.fromCharCode(codes[i][0]) + String.fromCharCode(codes[i][2] + code - 0x30);
           }
         }
-      } else if (0x41 <= code && code <= 0x5a) {
+        resultTexts[typeNum] += mapChars[code - 0x30][0];
+        resultTexts[typeNum + 1] += mapChars[code - 0x30][1];
+      } else if (0x41 <= code && code <= 0x5a) { // A-Z
         for (let i = 0; i < typeNum; ++i) {
           if (codes[i][0] === 0) {
             resultTexts[i] += String.fromCharCode(codes[i][1] + code - 0x41);
@@ -64,7 +80,7 @@
             resultTexts[i] += c;
           }
         }
-      } else if (0x61 <= code && code <= 0x7a) {
+      } else if (0x61 <= code && code <= 0x7a) { // a-z
         for (let i = 0; i < typeNum; ++i) {
           if (codes[i][0] === 0) {
             resultTexts[i] += String.fromCharCode(codes[i][1] + 26 + code - 0x61);
@@ -81,7 +97,7 @@
       }
     }
 
-    for (let i = 0; i < typeNum; ++i) {
+    for (let i = 0; i < typeNum + 2; ++i) {
       elemResults[i].innerText = resultTexts[i] === '' ? '　' : resultTexts[i];
     }
   }
