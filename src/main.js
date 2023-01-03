@@ -80,6 +80,8 @@
             resultTexts[i] += c;
           }
         }
+        resultTexts[typeNum] += c;
+        resultTexts[typeNum + 1] += c;
       } else if (0x61 <= code && code <= 0x7a) { // a-z
         for (let i = 0; i < typeNum; ++i) {
           if (codes[i][0] === 0) {
@@ -90,10 +92,14 @@
             resultTexts[i] += c;
           }
         }
+        resultTexts[typeNum] += c;
+        resultTexts[typeNum + 1] += c;
       } else {
         for (let i = 0; i < typeNum; ++i) {
           resultTexts[i] += c;
         }
+        resultTexts[typeNum] += c;
+        resultTexts[typeNum + 1] += c;
       }
     }
 
