@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  const version = 'Version: 2023.01.01';
+  const version = 'Version: 2023.01.03';
 
   window.addEventListener('load', init, false);
 
