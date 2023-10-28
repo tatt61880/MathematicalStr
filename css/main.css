@@ -27,16 +27,13 @@ body {
   text-align: left;
 }
 
-h1 {
-  margin: 0;
-  font-size: 18px;
-  background-color: pink;
-}
-
+h1,
 h2 {
   margin: 0;
   font-size: 18px;
-  background-color: skyblue;
+  font-weight: bold;
+  color: #000055;
+  background-color: #c0cbff;
 }
 
 svg {
@@ -45,14 +42,4 @@ svg {
 
 div.inner {
   margin: 5px;
-}
-
-div.pink {
-  margin-bottom: 5px;
-  border: solid 3px pink;
-}
-
-div.skyblue {
-  margin-bottom: 5px;
-  border: solid 3px skyblue;
 }
