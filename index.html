@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <title>数学用文字列変換ツール</title>
   <meta charset="UTF-8">
@@ -7,83 +8,84 @@
   <link rel="icon" type="image/x-icon" href="./images/favicon.png">
   <link rel="apple-touch-icon" sizes="152x152" href="./images/apple-touch-icon.png?2022.05.26">
 
-  <link rel="stylesheet" href="./css/main.css?2022.10.30">
+  <link rel="stylesheet" href="./css/main.css">
 
-  <script src="./src/main.js?2023.01.03"></script>
+  <script defer src="./src/main.js"></script>
 </head>
 
 <body>
-<div id="contents">
-  <div class="pink">
-    <h1>数学用文字列変換ツール / @tatt61880</h1>
-    <p style="font-size: 0.7rem">
-      このツールは2022/05/27頃に公開しました。<br>
-      2022/12/31頃に公開された結城浩さんの <a href="https://textmath.hyuki.com/">Text to Math Converter</a> の方が便利かもしれません。
-    </p>
+  <div id="contents">
+    <div class="pink">
+      <h1>数学用文字列変換ツール / @tatt61880</h1>
+      <p style="font-size: 0.7rem">
+        このツールは2022/05/27頃に公開しました。<br>
+        2022/12/31頃に公開された結城浩さんの <a href="https://textmath.hyuki.com/">Text to Math Converter</a> の方が便利かもしれません。
+      </p>
 
 
-    <div class="inner">
-      <span id="version-info">　</span>
+      <div class="inner">
+        <span id="version-info">　</span>
+      </div>
+
+      <div class="inner">
+        入力: <input id="input-text" type="text" size="52">
+      </div>
+
+      <div id="result" class="inner">
+        【Mathematical Bold】<br>
+        <span id="result0">　</span><br>
+        【Mathematical Bold Italic】<br>
+        <span id="result1">　</span><br>
+        【Mathematical Bold Script】<br>
+        <span id="result2">　</span><br>
+        【Mathematical Bold Fraktur】<br>
+        <span id="result3">　</span><br>
+        【Mathematical Sans-Serif】<br>
+        <span id="result4">　</span><br>
+        【Mathematical Sans-Serif Bold】<br>
+        <span id="result5">　</span><br>
+        【Mathematical Sans-Serif Italic】<br>
+        <span id="result6">　</span><br>
+        【Mathematical Sans-Serif Bold Italic】<br>
+        <span id="result7">　</span><br>
+        【Mathematical Monospace】<br>
+        <span id="result8">　</span><br>
+        【Mathematical Double-Struck Digit (※数字のみ)】<br>
+        <span id="result9">　</span><br>
+        【Circled】<br>
+        <span id="result10">　</span><br>
+        【上付き数字 (※数字のみ)】<br>
+        <span id="result11">　</span><br>
+        【下付き数字 (※数字のみ)】<br>
+        <span id="result12">　</span><br>
+      </div>
     </div>
 
-    <div class="inner">
-      入力: <input id="input-text" type="text" size="52">
+    <div class="skyblue">
+      <h2>これは何？</h2>
+      <div class="inner">
+        数学用英数字記号などを用いて文章を書くためのツールです。<br>
+        0～9, A～Z, a～z を変換します。<br>
+      </div>
+      <div class="inner">
+        Chromeで動作確認しています。<br>
+        不具合があるかもしれせん。<br>
+        自己責任でご利用ください。<br>
+      </div>
+      <div class="inner">
+        ※変換後の文字列は視認性や検索性などに問題があるため、<br>
+        乱用はお控えください。
+      </div>
     </div>
 
-    <div id="result" class="inner">
-      【Mathematical Bold】<br>
-      <span id="result0">　</span><br>
-      【Mathematical Bold Italic】<br>
-      <span id="result1">　</span><br>
-      【Mathematical Bold Script】<br>
-      <span id="result2">　</span><br>
-      【Mathematical Bold Fraktur】<br>
-      <span id="result3">　</span><br>
-      【Mathematical Sans-Serif】<br>
-      <span id="result4">　</span><br>
-      【Mathematical Sans-Serif Bold】<br>
-      <span id="result5">　</span><br>
-      【Mathematical Sans-Serif Italic】<br>
-      <span id="result6">　</span><br>
-      【Mathematical Sans-Serif Bold Italic】<br>
-      <span id="result7">　</span><br>
-      【Mathematical Monospace】<br>
-      <span id="result8">　</span><br>
-      【Mathematical Double-Struck Digit (※数字のみ)】<br>
-      <span id="result9">　</span><br>
-      【Circled】<br>
-      <span id="result10">　</span><br>
-      【上付き数字 (※数字のみ)】<br>
-      <span id="result11">　</span><br>
-      【下付き数字 (※数字のみ)】<br>
-      <span id="result12">　</span><br>
+    <div class="pink">
+      <h2>このツールの作者</h2>
+      <div class="inner">
+        <a href="https://twitter.com/tatt61880">Tatt(たっと) @tatt61880</a><br>
+        要望などあれば、上記アカウントへどうぞ！<br>
+      </div>
     </div>
   </div>
-
-  <div class="skyblue">
-    <h2>これは何？</h2>
-    <div class="inner">
-      数学用英数字記号などを用いて文章を書くためのツールです。<br>
-      0～9, A～Z, a～z を変換します。<br>
-    </div>
-    <div class="inner">
-      Chromeで動作確認しています。<br>
-      不具合があるかもしれせん。<br>
-      自己責任でご利用ください。<br>
-    </div>
-    <div class="inner">
-      ※変換後の文字列は視認性や検索性などに問題があるため、<br>
-      乱用はお控えください。
-    </div>
-  </div>
-
-  <div class="pink">
-    <h2>このツールの作者</h2>
-    <div class="inner">
-      <a href="https://twitter.com/tatt61880">Tatt(たっと) @tatt61880</a><br>
-      要望などあれば、上記アカウントへどうぞ！<br>
-    </div>
-  </div>
-</div>
 </body>
+
 </html>

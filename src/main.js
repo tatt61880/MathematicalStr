@@ -56,7 +56,8 @@
 
     for (const c of text) {
       const code = c.charCodeAt(0);
-      if (0x30 <= code && code <= 0x39) { // 0-9
+      if (0x30 <= code && code <= 0x39) {
+        // 0-9
         for (let i = 0; i < typeNum; ++i) {
           if (codes[i][0] === 0) {
             if (code === 0x30) {
@@ -65,29 +66,39 @@
               resultTexts[i] += String.fromCharCode(codes[i][3] + code - 0x30);
             }
           } else {
-            resultTexts[i] += String.fromCharCode(codes[i][0]) + String.fromCharCode(codes[i][2] + code - 0x30);
+            resultTexts[i] +=
+              String.fromCharCode(codes[i][0]) +
+              String.fromCharCode(codes[i][2] + code - 0x30);
           }
         }
         resultTexts[typeNum] += mapChars[code - 0x30][0];
         resultTexts[typeNum + 1] += mapChars[code - 0x30][1];
-      } else if (0x41 <= code && code <= 0x5a) { // A-Z
+      } else if (0x41 <= code && code <= 0x5a) {
+        // A-Z
         for (let i = 0; i < typeNum; ++i) {
           if (codes[i][0] === 0) {
             resultTexts[i] += String.fromCharCode(codes[i][1] + code - 0x41);
           } else if (codes[i][1] !== 0) {
-            resultTexts[i] += String.fromCharCode(codes[i][0]) + String.fromCharCode(codes[i][1] + code - 0x41);
+            resultTexts[i] +=
+              String.fromCharCode(codes[i][0]) +
+              String.fromCharCode(codes[i][1] + code - 0x41);
           } else {
             resultTexts[i] += c;
           }
         }
         resultTexts[typeNum] += c;
         resultTexts[typeNum + 1] += c;
-      } else if (0x61 <= code && code <= 0x7a) { // a-z
+      } else if (0x61 <= code && code <= 0x7a) {
+        // a-z
         for (let i = 0; i < typeNum; ++i) {
           if (codes[i][0] === 0) {
-            resultTexts[i] += String.fromCharCode(codes[i][1] + 26 + code - 0x61);
+            resultTexts[i] += String.fromCharCode(
+              codes[i][1] + 26 + code - 0x61
+            );
           } else if (codes[i][1] !== 0) {
-            resultTexts[i] += String.fromCharCode(codes[i][0]) + String.fromCharCode(codes[i][1] + 26 + code - 0x61);
+            resultTexts[i] +=
+              String.fromCharCode(codes[i][0]) +
+              String.fromCharCode(codes[i][1] + 26 + code - 0x61);
           } else {
             resultTexts[i] += c;
           }
