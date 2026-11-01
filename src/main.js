@@ -5,6 +5,7 @@
   const input = document.getElementById('input-text');
   const fullwidth = document.getElementById('convert-fullwidth');
   const plainButton = document.getElementById('plain-button');
+  const clearButton = document.getElementById('clear-button');
   const exampleButton = document.getElementById('example-button');
   const status = document.getElementById('status');
   const results = document.getElementById('result');
@@ -51,7 +52,7 @@
       item.button.disabled = text.length === 0;
     }
     plainButton.disabled = toPlainText(text) === text;
-    exampleButton.disabled = text.length !== 0;
+    clearButton.disabled = text.length === 0;
     document.getElementById('empty-message').hidden = text.length !== 0;
   }
 
@@ -112,6 +113,12 @@
     updateResults();
     input.focus({ preventScroll: true });
     status.textContent = '標準の英数字に戻しました。';
+  });
+  clearButton.addEventListener('click', () => {
+    input.value = '';
+    updateResults();
+    input.focus({ preventScroll: true });
+    status.textContent = '入力をクリアしました。';
   });
   exampleButton.addEventListener('click', () => {
     input.value = 'Hello 123\nABC xyz';
