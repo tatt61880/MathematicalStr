@@ -1,45 +1,280 @@
 @charset "UTF-8";
 
-html {
-  touch-action: manipulation;
+@font-face {
+  font-family: "MathematicalStr Math";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/NotoSansMath-Regular.woff") format("woff");
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  font-family: system-ui, sans-serif;
+  line-height: 1.6;
+  color: #172344;
   background-color: #ccffff;
 }
 
+button,
+textarea,
+input {
+  font: inherit;
+}
+
+button {
+  min-height: 44px;
+  padding: 7px 12px;
+  font-size: 0.875rem;
+  color: #213a76;
+  touch-action: manipulation;
+  cursor: pointer;
+  background: #f2f5ff;
+  border: 1px solid #9aaada;
+  border-radius: 7px;
+}
+
+button:disabled {
+  color: #68738b;
+  cursor: default;
+  background: #f5f6f8;
+  border-color: #d4d9e3;
+}
+
+button:hover:not(:disabled) {
+  background: #e1e8ff;
+}
+
+:focus-visible {
+  outline: 3px solid #315ccc;
+  outline-offset: 3px;
+}
+
+a {
+  color: #2349a0;
+  text-underline-offset: 3px;
+}
+
 #contents {
-  max-width: 500px;
-  padding: 0;
+  max-width: 780px;
+  min-height: 100vh;
   margin: 0 auto;
+  background: #ffffff;
+}
+
+.page-header {
+  padding: 20px 16px 14px;
   text-align: center;
-  background-color: white;
-}
-
-#version-info {
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #bbbbbb;
-}
-
-.left {
-  text-align: left;
+  background: #c0cbff;
 }
 
 h1,
-h2 {
+h2,
+h3,
+p {
   margin: 0;
-  font-size: 18px;
-  font-weight: bold;
+}
+
+h1 {
+  font-size: clamp(1.15rem, 4.5vw, 1.5rem);
   color: #000055;
-  background-color: #c0cbff;
 }
 
-svg {
-  user-select: none;
+.byline {
+  margin-top: 4px;
+  font-size: 0.8rem;
 }
 
-div.inner {
-  margin: 5px;
+#version-info {
+  margin-left: 12px;
+  color: #47577d;
+}
+
+.input-section,
+.results-section {
+  padding: 18px;
+}
+
+.input-section {
+  background: #fafbff;
+  border-bottom: 1px solid #e2e6f1;
+}
+
+.input-header,
+.input-actions,
+.result-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-header {
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+#input-text {
+  display: block;
+  width: 100%;
+  min-height: 110px;
+  padding: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #172344;
+  resize: vertical;
+  background: #ffffff;
+  border: 1px solid #9aaada;
+  border-radius: 8px;
+}
+
+.hint {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #5a6580;
+}
+
+.input-actions {
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #365bc2;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+#result {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.result-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #d9dfef;
+  border-radius: 8px;
+}
+
+.result-header {
+  gap: 8px;
+  padding: 8px 10px;
+  background: #f2f4ff;
+}
+
+h3 {
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.copy-button {
+  flex-shrink: 0;
+  padding: 6px 10px;
+}
+
+.result-text {
+  min-height: 64px;
+  max-height: 240px;
+  padding: 12px;
+  overflow: auto;
+  font-family: "MathematicalStr Math", "Cambria Math", "STIX Two Math", "Noto Sans Math", serif;
+  font-size: 1.4rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.result-text:empty::before {
+  color: #8992a6;
+  content: "—";
+}
+
+.result-text:focus-visible {
+  outline-offset: -3px;
+}
+
+.about {
+  padding: 16px 18px 100px;
+  font-size: 0.85rem;
+  border-top: 1px solid #e2e6f1;
+}
+
+.about summary {
+  padding: 8px 0;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.about ul {
+  padding-left: 1.5em;
+}
+
+.about li,
+.about p {
+  margin-top: 8px;
+}
+
+#status:not(:empty) {
+  position: fixed;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  left: 12px;
+  z-index: 1;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+  padding: 10px 16px;
+  margin: 0 auto;
+  font-size: 0.875rem;
+  color: #ffffff;
+  pointer-events: none;
+  background: #25355e;
+  border-radius: 8px;
+}
+
+.clipboard-field {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  font-size: 16px;
+  opacity: 0;
+}
+
+.noscript-message {
+  padding: 18px;
+  color: #a12020;
+}
+
+@media (width <= 600px) {
+  #result {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .input-section,
+  .results-section {
+    padding: 14px;
+  }
 }

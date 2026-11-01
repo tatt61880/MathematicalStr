@@ -1,121 +1,124 @@
 (function () {
   'use strict';
-  const version = 'Version: 2023.01.03';
 
-  window.addEventListener('load', init, false);
+  const { styles, convert, toPlainText } = window.MathematicalStr;
+  const input = document.getElementById('input-text');
+  const fullwidth = document.getElementById('convert-fullwidth');
+  const plainButton = document.getElementById('plain-button');
+  const exampleButton = document.getElementById('example-button');
+  const status = document.getElementById('status');
+  const results = document.getElementById('result');
+  const cards = [];
+  let copyRequest = 0;
 
-  let elemText;
-  const elemResults = [];
-  const codes = [
-    // [1バイト目, 英, 数]
-    [55349, 56320, 57294],
-    [55349, 56424, 57294],
-    [55349, 56528, 57294],
-    [55349, 56684, 57294],
-    [55349, 56736, 57314],
-    [55349, 56788, 57324],
-    [55349, 56840, 57314],
-    [55349, 56892, 57324],
-    [55349, 56944, 57334],
-    [55349, 0, 57304],
-    [0, 9398, 9450, 9311],
-  ];
-  const mapChars = {
-    0: ['⁰', '₀'],
-    1: ['¹', '₁'],
-    2: ['²', '₂'],
-    3: ['³', '₃'],
-    4: ['⁴', '₄'],
-    5: ['⁵', '₅'],
-    6: ['⁶', '₆'],
-    7: ['⁷', '₇'],
-    8: ['⁸', '₈'],
-    9: ['⁹', '₉'],
-  };
-  const typeNum = codes.length;
-
-  function init() {
-    document.getElementById('version-info').innerText = version;
-
-    elemText = document.getElementById('input-text');
-    elemText.addEventListener('input', updateResult, false);
-    for (let i = 0; i < typeNum + 2; ++i) {
-      elemResults[i] = document.getElementById(`result${i}`);
-    }
-    updateResult();
+  for (const style of styles) {
+    const card = document.createElement('section');
+    card.className = 'result-card';
+    const heading = document.createElement('h3');
+    heading.id = `heading-${style.id}`;
+    heading.textContent = style.label;
+    card.setAttribute('aria-labelledby', heading.id);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-button';
+    button.textContent = 'コピー';
+    button.setAttribute('aria-label', `${style.label}をコピー`);
+    const output = document.createElement('p');
+    output.id = `result-${style.id}`;
+    output.className = 'result-text';
+    output.dir = 'auto';
+    output.tabIndex = 0;
+    output.setAttribute('aria-labelledby', heading.id);
+    button.setAttribute('aria-controls', output.id);
+    const header = document.createElement('div');
+    header.className = 'result-header';
+    header.append(heading, button);
+    card.append(header, output);
+    results.append(card);
+    const item = { style, output, button, text: '' };
+    button.addEventListener('click', () => copyResult(item));
+    cards.push(item);
   }
 
-  function updateResult() {
-    const text = elemText.value;
-    const resultTexts = [];
-    for (let i = 0; i < typeNum; ++i) {
-      resultTexts[i] = '';
+  function updateResults() {
+    // Ignore a pending clipboard notification after the input has changed.
+    copyRequest += 1;
+    status.textContent = '';
+    const text = input.value;
+    for (const item of cards) {
+      item.text = convert(text, item.style.id, fullwidth.checked);
+      item.output.textContent = item.text;
+      item.button.disabled = text.length === 0;
     }
-    resultTexts[typeNum] = '';
-    resultTexts[typeNum + 1] = '';
+    plainButton.disabled = toPlainText(text) === text;
+    exampleButton.disabled = text.length !== 0;
+    document.getElementById('empty-message').hidden = text.length !== 0;
+  }
 
-    for (const c of text) {
-      const code = c.charCodeAt(0);
-      if (0x30 <= code && code <= 0x39) {
-        // 0-9
-        for (let i = 0; i < typeNum; ++i) {
-          if (codes[i][0] === 0) {
-            if (code === 0x30) {
-              resultTexts[i] += String.fromCharCode(codes[i][2] + code - 0x30);
-            } else {
-              resultTexts[i] += String.fromCharCode(codes[i][3] + code - 0x30);
-            }
-          } else {
-            resultTexts[i] +=
-              String.fromCharCode(codes[i][0]) +
-              String.fromCharCode(codes[i][2] + code - 0x30);
-          }
-        }
-        resultTexts[typeNum] += mapChars[code - 0x30][0];
-        resultTexts[typeNum + 1] += mapChars[code - 0x30][1];
-      } else if (0x41 <= code && code <= 0x5a) {
-        // A-Z
-        for (let i = 0; i < typeNum; ++i) {
-          if (codes[i][0] === 0) {
-            resultTexts[i] += String.fromCharCode(codes[i][1] + code - 0x41);
-          } else if (codes[i][1] !== 0) {
-            resultTexts[i] +=
-              String.fromCharCode(codes[i][0]) +
-              String.fromCharCode(codes[i][1] + code - 0x41);
-          } else {
-            resultTexts[i] += c;
-          }
-        }
-        resultTexts[typeNum] += c;
-        resultTexts[typeNum + 1] += c;
-      } else if (0x61 <= code && code <= 0x7a) {
-        // a-z
-        for (let i = 0; i < typeNum; ++i) {
-          if (codes[i][0] === 0) {
-            resultTexts[i] += String.fromCharCode(
-              codes[i][1] + 26 + code - 0x61
-            );
-          } else if (codes[i][1] !== 0) {
-            resultTexts[i] +=
-              String.fromCharCode(codes[i][0]) +
-              String.fromCharCode(codes[i][1] + 26 + code - 0x61);
-          } else {
-            resultTexts[i] += c;
-          }
-        }
-        resultTexts[typeNum] += c;
-        resultTexts[typeNum + 1] += c;
-      } else {
-        for (let i = 0; i < typeNum; ++i) {
-          resultTexts[i] += c;
-        }
-        resultTexts[typeNum] += c;
-        resultTexts[typeNum + 1] += c;
+  function legacyCopy(text) {
+    const active = document.activeElement;
+    const selection = window.getSelection();
+    const ranges = [];
+    for (let i = 0; i < selection.rangeCount; i += 1) {
+      ranges.push(selection.getRangeAt(i).cloneRange());
+    }
+    const field = document.createElement('textarea');
+    field.className = 'clipboard-field';
+    field.value = text;
+    field.readOnly = true;
+    field.setAttribute('aria-label', 'コピーする文字列');
+    document.body.append(field);
+    try {
+      field.focus({ preventScroll: true });
+      field.select();
+      field.setSelectionRange(0, field.value.length);
+      if (!document.execCommand('copy')) throw new Error('Copy unavailable');
+    } finally {
+      field.remove();
+      active?.focus({ preventScroll: true });
+      selection.removeAllRanges();
+      for (const range of ranges) selection.addRange(range);
+    }
+  }
+
+  async function copyResult(item) {
+    const request = ++copyRequest;
+    const text = item.text;
+    status.textContent = '';
+    try {
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+        await navigator.clipboard.writeText(text);
+      } catch {
+        legacyCopy(text);
       }
-    }
-
-    for (let i = 0; i < typeNum + 2; ++i) {
-      elemResults[i].innerText = resultTexts[i] === '' ? '　' : resultTexts[i];
+      if (request === copyRequest) status.textContent = `${item.style.label}をコピーしました。`;
+    } catch {
+      if (request !== copyRequest) return;
+      const range = document.createRange();
+      range.selectNodeContents(item.output);
+      const selection = window.getSelection();
+      item.output.focus({ preventScroll: true });
+      selection.removeAllRanges();
+      selection.addRange(range);
+      status.textContent = 'コピーできませんでした。選択された変換結果を手動でコピーしてください。';
     }
   }
+
+  input.addEventListener('input', updateResults);
+  fullwidth.addEventListener('change', updateResults);
+  plainButton.addEventListener('click', () => {
+    input.value = toPlainText(input.value);
+    updateResults();
+    input.focus({ preventScroll: true });
+    status.textContent = '標準の英数字に戻しました。';
+  });
+  exampleButton.addEventListener('click', () => {
+    input.value = 'Hello 123\nABC xyz';
+    updateResults();
+    input.focus({ preventScroll: true });
+  });
+  // Browsers may restore form values when returning to the page.
+  window.addEventListener('pageshow', updateResults);
+  updateResults();
 })();
