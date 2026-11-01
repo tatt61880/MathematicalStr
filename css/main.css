@@ -1,10 +1,10 @@
 @charset "UTF-8";
 
 @font-face {
-  font-family: "MathematicalStr Math";
+  font-family: 'MathematicalStr Math';
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/NotoSansMath-Regular.woff") format("woff");
+  src: url('../fonts/NotoSansMath-Regular.woff') format('woff');
   font-display: swap;
 }
 
@@ -67,7 +67,7 @@ a {
 }
 
 .page-header {
-  padding: 20px 16px 14px;
+  padding: 10px;
   text-align: center;
   background: #c0cbff;
 }
@@ -205,7 +205,8 @@ h3 {
   max-height: 240px;
   padding: 12px;
   overflow: auto;
-  font-family: "MathematicalStr Math", "Cambria Math", "STIX Two Math", "Noto Sans Math", serif;
+  font-family: 'MathematicalStr Math', 'Cambria Math', 'STIX Two Math',
+    'Noto Sans Math', serif;
   font-size: 1.4rem;
   line-height: 1.7;
   overflow-wrap: anywhere;
@@ -214,7 +215,7 @@ h3 {
 
 .result-text:empty::before {
   color: #8992a6;
-  content: "—";
+  content: '—';
 }
 
 .result-text:focus-visible {
